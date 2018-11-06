@@ -3,8 +3,10 @@ package com.example.vladu.carpark;
 import android.app.ActionBar;
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.widget.Toast;
 
 import java.net.PasswordAuthentication;
@@ -58,6 +60,18 @@ public class DBManager {
 
         long ID = sqlDB.insert(TableName,"",values);
         return ID;
+    }
+    // select username, password from Users where id =1
+    public Cursor query(String[] projection, String selection, String[] selectionArgs, String order){
+
+        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+        qb.setTables(TableName);
+
+        Cursor c = qb.query(sqlDB, projection, selection, selectionArgs,null,null,order);
+        return c;
+
+
+
     }
 
 }
