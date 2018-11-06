@@ -19,6 +19,8 @@ public class LoginActivity extends AppCompatActivity {
         final Button registerLink = (Button) findViewById(R.id.registerLinkBtn);
         final Button login = (Button) findViewById(R.id.loginBtn);
 
+        DBManager dbManager = new DBManager(this);
+
         registerLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
