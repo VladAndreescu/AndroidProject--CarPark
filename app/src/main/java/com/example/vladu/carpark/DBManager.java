@@ -1,5 +1,7 @@
 package com.example.vladu.carpark;
 
+import android.app.ActionBar;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -50,6 +52,12 @@ public class DBManager {
         DatabaseHelperUser db = new DatabaseHelperUser(context);
         sqlDB = db.getWritableDatabase();
 
+    }
+
+    public long Insert(ContentValues values){
+
+        long ID = sqlDB.insert(TableName,"",values);
+        return ID;
     }
 
 }
