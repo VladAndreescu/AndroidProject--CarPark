@@ -19,7 +19,9 @@
         android:hint="Username"
         android:inputType="textPersonName"
         android:singleLine="false"
+        android:textAllCaps="false"
         android:textSize="22sp"
+        android:typeface="normal"
         android:visibility="visible" />
 
     <EditText
@@ -43,8 +45,22 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="151dp"
+        android:layout_marginBottom="75dp"
         android:text="Log-in"
         android:textSize="16sp"
         android:visibility="visible" />
+
+    <Button
+        android:id="@+id/registerLinkBtn"
+        style="@android:style/Widget.DeviceDefault.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="145dp"
+        android:text="Don't have an account?"
+        android:visibility="visible"
+
+        />
+
 </RelativeLayout>
