@@ -38,7 +38,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 // Empty boxes validation
 
-                if(username == null || email == null || password == null)
+                if(username.equals("") || email.equals("") || password.equals(""))
                     Toast.makeText(getApplicationContext(),"Please complete all fields",Toast.LENGTH_LONG).show();
                 else {
                     // Username Validation - make sure that the username is unique
