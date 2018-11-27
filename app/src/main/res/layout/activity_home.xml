@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,45 +9,63 @@
 
     <Button
         android:id="@+id/newRecordBtn"
-        android:layout_width="229dp"
-        android:layout_height="64dp"
+        android:layout_width="292dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="98dp"
-        android:layout_marginLeft="98dp"
-        android:layout_marginTop="151dp"
-        android:text="New Record"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/buttonbkg"
 
-        />
+        android:text="New Record"
+        app:layout_constraintBottom_toTopOf="@+id/viewRecBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/viewRecBtn"
-        android:layout_width="229dp"
-        android:layout_height="64dp"
+        android:layout_width="292dp"
+        android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/newRecordBtn"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginEnd="86dp"
-        android:layout_marginRight="86dp"
-        android:layout_marginBottom="-121dp"
-        android:text="View Records" />
+        android:background="@drawable/buttonbkg"
+        android:text="View Records"
+        app:layout_constraintBottom_toTopOf="@+id/changeUserBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newRecordBtn" />
 
     <Button
         android:id="@+id/changeUserBtn"
-        android:layout_width="171dp"
+        android:layout_width="295dp"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="191dp"
-        android:text="Change User" />
+        android:background="@drawable/buttonbkg"
+        android:text="Change User"
+        app:layout_constraintBottom_toTopOf="@+id/exitBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewRecBtn" />
 
     <Button
         android:id="@+id/exitBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="292dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="90dp"
-        android:text="Exit" />
-</RelativeLayout>
+        android:layout_alignBottom="@+id/changeUserBtn"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/buttonbkg"
+        android:text="Exit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/changeUserBtn" />
+</android.support.constraint.ConstraintLayout>

@@ -1,6 +1,7 @@
 package com.example.vladu.carpark;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
@@ -69,8 +70,11 @@ public class RegisterActivity extends AppCompatActivity {
                         long id = dbManager.Insert(values);
 
                         // Validating Registration
-                        if (id > 0)
+                        if (id > 0){
                             Toast.makeText(getApplicationContext(), "Register Completed", Toast.LENGTH_LONG).show();
+                            Intent loginIntent = new Intent(RegisterActivity.this,LoginActivity.class);
+                            RegisterActivity.this.startActivity(loginIntent);
+                        }
                         else
                             Toast.makeText(getApplicationContext(), "Register Failed", Toast.LENGTH_LONG).show();
                     }
