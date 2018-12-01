@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CarDetailsActivity">
+
+    <TextView
+        android:id="@+id/permitNoView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Permit No."
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@+id/carRegView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/carRegView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Registration No"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@+id/makeView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/permitNoView" />
+
+    <TextView
+        android:id="@+id/makeView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Make"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@+id/modelView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/carRegView" />
+
+    <TextView
+        android:id="@+id/modelView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Model"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/makeView" />
+
+    <EditText
+        android:id="@+id/permitNoEdit"
+        android:layout_width="274dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="e.g. 6753242"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/carRegView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/permitNoView"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/carRegEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="e.g. RJ08KOA"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/carRegView"
+        app:layout_constraintTop_toBottomOf="@+id/permitNoEdit"
+        app:layout_constraintVertical_bias="0.208" />
+
+    <EditText
+        android:id="@+id/makeEdit"
+        android:layout_width="325dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="e.g. SEAT"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.985"
+        app:layout_constraintStart_toEndOf="@+id/makeView"
+        app:layout_constraintTop_toBottomOf="@+id/carRegEdit"
+        app:layout_constraintVertical_bias="0.283" />
+
+    <EditText
+        android:id="@+id/modelEdit"
+        android:layout_width="301dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="e.g. IBIZA"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/modelView"
+        app:layout_constraintTop_toBottomOf="@+id/makeEdit"
+        app:layout_constraintVertical_bias="0.468" />
+
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/backarrow"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/personDetailsButton"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="28dp"
+        android:layout_marginRight="28dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/nextarrow"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</android.support.constraint.ConstraintLayout>
