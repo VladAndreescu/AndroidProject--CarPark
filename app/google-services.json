@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "134968963715",
+    "firebase_url": "https://cem-carpark.firebaseio.com",
+    "project_id": "cem-carpark",
+    "storage_bucket": "cem-carpark.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:134968963715:android:85408c450a374ca7",
+        "android_client_info": {
+          "package_name": "com.example.vladu.carpark"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "134968963715-2chb8jpjqo3sqcbtl9kviva9t6je1jjv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.vladu.carpark",
+            "certificate_hash": "97c65a298d1e6c8ed1da49c3a3353913d6c58735"
+          }
+        },
+        {
+          "client_id": "134968963715-721mk2h1i8v7oi7itfgjr701shlu5v1o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsHSgDFPr1lE3aElVn9gQo8oy-r4_KsqA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "134968963715-721mk2h1i8v7oi7itfgjr701shlu5v1o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

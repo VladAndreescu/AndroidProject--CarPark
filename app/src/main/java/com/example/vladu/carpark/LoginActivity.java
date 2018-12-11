@@ -19,8 +19,9 @@ import com.google.firebase.database.DatabaseReference;
 
 
 public class LoginActivity extends AppCompatActivity {
-    private String TAG = "LoginActivity";
+
     //setup variables
+    private String TAG = "LoginActivity";
     private EditText emailLogin;
     private EditText passwordLogin;
     private Button registerLink;
@@ -34,6 +35,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        mAuth = FirebaseAuth.getInstance();
+
 
         emailLogin = (EditText) findViewById(R.id.emailEdt);
         passwordLogin = (EditText) findViewById(R.id.passwordEdt);
