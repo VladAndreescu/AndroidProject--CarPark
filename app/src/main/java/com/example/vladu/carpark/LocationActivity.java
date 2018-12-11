@@ -86,6 +86,10 @@ public class LocationActivity extends AppCompatActivity
 
     }
 
+    /*private void refreshAddresses(ArrayList<String> addresses){
+        addresses.setAdapter
+    }*/
+
     private class getJsonData extends AsyncTask<String, String, String> {
 
         protected void onPreExecute() {
@@ -109,6 +113,7 @@ public class LocationActivity extends AppCompatActivity
                     response.getEntity().writeTo(output);
                     output.close();
                     responseString = output.toString();
+                    Log.d("Response", responseString);
                 }else {
                     response.getEntity().getContent().close();
                     throw new IOException(statusLine.getReasonPhrase());
@@ -128,10 +133,11 @@ public class LocationActivity extends AppCompatActivity
             try{
                 jsonObject = new JSONObject(response);
                 jsonArray = jsonObject.getJSONArray("addresses");
-
+                //jsonObject = jsonArray.getJSONObject(0);
+                ArrayList<String> addresses = new ArrayList<>();
                 for(int i = 0; i < jsonArray.length(); i++){
-                    JSONObject address = jsonArray.getJSONObject(i);
-                    addresses.add(address.getString("addresses"));
+                    String spinnerElement = jsonArray.getString(i);
+                    addresses.add(spinnerElement);
                 }
 
                 Spinner addressSpinner = (Spinner) findViewById(R.id.addressSpinner);
@@ -152,7 +158,7 @@ public class LocationActivity extends AppCompatActivity
                 });
 
             }catch(JSONException e){
-                Log.d("Error", "onPostExecute: Could not parse the Json ");
+                e.printStackTrace();
             }
 
 
