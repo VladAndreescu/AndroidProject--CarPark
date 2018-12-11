@@ -10,86 +10,117 @@
         android:id="@+id/ownerNameText"
         android:layout_width="165dp"
         android:layout_height="41dp"
+        android:layout_marginTop="8dp"
         android:text="Owner Name"
         android:textSize="25sp"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="31dp" />
+        app:layout_constraintBottom_toTopOf="@+id/ownerNameEdt"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="16dp" />
 
     <EditText
         android:id="@+id/ownerNameEdt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="Owner name"
         android:inputType="textPersonName"
         android:textSize="20sp"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="90dp" />
+        app:layout_constraintBottom_toTopOf="@+id/offenceText"
+        app:layout_constraintTop_toBottomOf="@+id/ownerNameText"
+        tools:layout_editor_absoluteX="16dp" />
 
     <EditText
         android:id="@+id/offenceEdt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="Offence"
         android:inputType="textPersonName"
         android:textSize="20sp"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="240dp" />
+        app:layout_constraintBottom_toTopOf="@+id/descText"
+        app:layout_constraintTop_toBottomOf="@+id/offenceText"
+        tools:layout_editor_absoluteX="16dp" />
 
     <EditText
         android:id="@+id/descriptionEdt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="Description"
         android:inputType="textPersonName"
         android:textSize="20sp"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="387dp" />
+        app:layout_constraintBottom_toTopOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/descText"
+        tools:layout_editor_absoluteX="16dp" />
 
     <TextView
         android:id="@+id/offenceText"
         android:layout_width="165"
         android:layout_height="41"
+        android:layout_marginTop="8dp"
         android:text="Offence"
         android:textSize="25sp"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="173dp" />
+        app:layout_constraintBottom_toTopOf="@+id/offenceEdt"
+        app:layout_constraintTop_toBottomOf="@+id/ownerNameEdt"
+        tools:layout_editor_absoluteX="16dp" />
 
     <TextView
         android:id="@+id/descText"
         android:layout_width="165"
-        android:layout_height="41"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="Description"
         android:textSize="25sp"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="320dp" />
+        app:layout_constraintBottom_toTopOf="@+id/descriptionEdt"
+        app:layout_constraintTop_toBottomOf="@+id/offenceEdt"
+        tools:layout_editor_absoluteX="16dp" />
 
     <Button
         android:id="@+id/takePictureBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
         android:text="Take a Picture"
         android:textSize="16sp"
-        tools:layout_editor_absoluteX="143dp"
-        tools:layout_editor_absoluteY="457dp" />
+        app:layout_constraintBottom_toTopOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.518"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionEdt"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/uploadRecordBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:text="Upload Record"
         android:textSize="16sp"
-        tools:layout_editor_absoluteX="249dp"
-        tools:layout_editor_absoluteY="539dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/takePictureBtn" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="100"
         android:layout_height="100"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:visibility="visible"
-        app:srcCompat="@color/common_google_signin_btn_text_dark_default"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="457dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/uploadRecordBtn"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionEdt"
+        app:srcCompat="@color/common_google_signin_btn_text_dark_default" />
 </android.support.constraint.ConstraintLayout>
