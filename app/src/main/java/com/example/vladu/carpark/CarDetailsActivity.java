@@ -36,12 +36,12 @@ public class CarDetailsActivity extends AppCompatActivity {
                 String carMakeValue = carMake.getText().toString();
                 String carModelValue = carModel.getText().toString();
 
-                /*Intent i =  new Intent(CarDetailsActivity.//this, OwnerDetails.class);
+                Intent i =  new Intent(CarDetailsActivity.this, OwnerDetails.class);
                 i.putExtra("permitNo", permitNoValue);
                 i.putExtra("registrationNo", regNoValue);
                 i.putExtra("carMake", carMakeValue);
                 i.putExtra("carModel", carModelValue);
-                startActivity(i);*/
+                startActivity(i);
             }
 
         });
