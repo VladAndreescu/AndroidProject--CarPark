@@ -9,7 +9,7 @@
     tools:context=".LoginActivity">
 
     <EditText
-        android:id="@+id/usernameEdt"
+        android:id="@+id/emailEdt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -20,7 +20,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="52dp"
         android:ems="10"
-        android:hint="Username"
+        android:hint="email"
         android:inputType="textPersonName"
         android:singleLine="false"
         android:textAllCaps="false"
@@ -35,7 +35,7 @@
         android:id="@+id/passwordEdt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/usernameEdt"
+        android:layout_alignStart="@+id/emailEdt"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"

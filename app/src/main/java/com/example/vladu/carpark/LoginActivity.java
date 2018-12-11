@@ -1,27 +1,44 @@
 package com.example.vladu.carpark;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class LoginActivity extends AppCompatActivity {
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 
+
+public class LoginActivity extends AppCompatActivity {
+    private String TAG = "LoginActivity";
+    //setup variables
+    private EditText emailLogin;
+    private EditText passwordLogin;
+    private Button registerLink;
+    private Button login;
+
+
+    //implement firebase authentication
+    private DatabaseReference mDatabase;
+    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        final EditText usernameLogin = (EditText) findViewById(R.id.usernameEdt);
-        final EditText passwordLogin = (EditText) findViewById(R.id.passwordEdt);
-        final Button registerLink = (Button) findViewById(R.id.registerLinkBtn);
-        final Button login = (Button) findViewById(R.id.loginBtn);
-
-        final DBManager dbManager = new DBManager(this);
+        emailLogin = (EditText) findViewById(R.id.emailEdt);
+        passwordLogin = (EditText) findViewById(R.id.passwordEdt);
+        registerLink = (Button) findViewById(R.id.registerLinkBtn);
+        login = (Button) findViewById(R.id.loginBtn);
 
         // Set up navigation link for register button
         registerLink.setOnClickListener(new View.OnClickListener() {
@@ -37,46 +54,8 @@ public class LoginActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Login();
 
-                String username = usernameLogin.getText().toString();
-                String password = passwordLogin.getText().toString();
-
-                if (username.equals("") || password.equals(""))
-
-                    Toast.makeText(getApplicationContext(), "Please complete all fields", Toast.LENGTH_LONG).show();
-
-
-                else {
-                        String[] usernameProjection = {"Username"};
-                        String usernameSelection = "Username=?";
-                        String[] usernameSelectionArgs = {username};
-
-                        Cursor usernameCursor = dbManager.query(usernameProjection, usernameSelection, usernameSelectionArgs, DBManager.usernameCol);
-
-                        if (usernameCursor.getCount() > 0) {
-
-                            String[] passwordProjection = {"Password", "Username"};
-                            String passwordSelection = "Password =? AND Username =?";
-                            String[] passwordSelectionArgs = {password, username};
-
-                            Cursor passwordCursor = dbManager.query(passwordProjection, passwordSelection, passwordSelectionArgs, DBManager.passwordCol);
-
-                            if (passwordCursor.getCount() > 0) {
-
-                                Toast.makeText(getApplicationContext(), "Login successful", Toast.LENGTH_LONG).show();
-                                Intent homeIntent = new Intent(LoginActivity.this, HomeActivity.class);
-                                LoginActivity.this.startActivity(homeIntent);
-
-                            }
-                            else
-                                Toast.makeText(getApplicationContext(), "Login failed. Incorrect password", Toast.LENGTH_LONG).show();
-                        }
-                        else
-
-                            Toast.makeText(getApplicationContext(), "Username not found", Toast.LENGTH_SHORT).show();
-
-
-                }
             }
 
         });
@@ -84,6 +63,41 @@ public class LoginActivity extends AppCompatActivity {
 
 
         };
+
+        private void Login(){
+            String email = emailLogin.getText().toString();
+            String password = passwordLogin.getText().toString();
+
+            if (email.equals("") || password.equals(""))
+
+                Toast.makeText(getApplicationContext(), "Please complete all fields", Toast.LENGTH_LONG).show();
+
+
+            else {
+                mAuth.signInWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                Log.d(TAG, "signIn:onComplete:" + task.isSuccessful());
+
+
+                                if (task.isSuccessful()) {
+                                    final FirebaseUser currentUser = mAuth.getCurrentUser();
+                                    // Go to User Area Activity
+                                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                                    finish();
+                                } else {
+                                    Toast.makeText(LoginActivity.this, "Login was not succesfull",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+
+
+            }
+
+
+        }
 
     }
 
