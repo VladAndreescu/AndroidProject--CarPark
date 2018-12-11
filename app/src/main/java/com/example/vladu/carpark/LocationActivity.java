@@ -2,6 +2,7 @@ package com.example.vladu.carpark;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.AsyncTask;
@@ -24,6 +25,10 @@ import com.google.android.gms.maps.GoogleMap.OnMyLocationButtonClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationClickListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -61,6 +66,11 @@ public class LocationActivity extends AppCompatActivity
     JSONArray jsonArray;
     ArrayList<String> addresses;
     ProgressDialog pd;
+    Button nextbtn;
+    Spinner addressSpinner;
+
+    private DatabaseReference mDB;
+    private FirebaseAuth mAuth;
 
 
     @Override
@@ -71,10 +81,15 @@ public class LocationActivity extends AppCompatActivity
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        mDB = FirebaseDatabase.getInstance().getReference();
+        mAuth = FirebaseAuth.getInstance();
+
         //declaring variables
         postcodeEdit = (EditText) findViewById(R.id.postcodeEdit);
         townEdit = (EditText) findViewById(R.id.townEdit);
         getAddresses = (Button) findViewById(R.id.findAddressBtn);
+        nextbtn = (Button) findViewById(R.id.locationNextBtn);
+
 
         getAddresses.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +97,23 @@ public class LocationActivity extends AppCompatActivity
                 new getJsonData().execute("https://api.getAddress.io/find/" + postcodeEdit.getText().toString() + "?api-key=Q8BXrVkS7EGLaUmdNH8lIw16531");
             }
         });
+
+        final FirebaseUser user = mAuth.getCurrentUser();
+        final String userID = user.getUid();
+        nextbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String postcodeValue = postcodeEdit.getText().toString();
+                String streetValue = addressSpinner.getSelectedItem().toString();
+                String townValue = townEdit.getText().toString();
+                Intent i = new Intent(LocationActivity.this, CarDetailsActivity.class);
+                i.putExtra("postcode", postcodeValue);
+                i.putExtra("town", townValue);
+                i.putExtra("street", streetValue);
+                startActivity(i);
+            }
+        });
+
 
 
     }
@@ -140,7 +172,7 @@ public class LocationActivity extends AppCompatActivity
                     addresses.add(spinnerElement);
                 }
 
-                Spinner addressSpinner = (Spinner) findViewById(R.id.addressSpinner);
+                addressSpinner = (Spinner) findViewById(R.id.addressSpinner);
 
                 addressSpinner.setAdapter(new ArrayAdapter<String>(LocationActivity.this,
                         android.R.layout.simple_spinner_dropdown_item,addresses));
