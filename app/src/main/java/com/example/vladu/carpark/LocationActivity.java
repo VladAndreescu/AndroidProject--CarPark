@@ -25,15 +25,18 @@ import com.google.android.gms.maps.GoogleMap.OnMyLocationClickListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.StatusLine;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 
 public class LocationActivity extends AppCompatActivity
@@ -94,81 +97,64 @@ public class LocationActivity extends AppCompatActivity
             pd.show();
         }
 
-        protected String doInBackground(String... params) {
-
-
-            HttpURLConnection connection = null;
-            BufferedReader reader = null;
-
-            try {
-                URL url = new URL(params[0]);
-                connection = (HttpURLConnection) url.openConnection();
-                connection.connect();
-
-
-                InputStream stream = connection.getInputStream();
-
-                reader = new BufferedReader(new InputStreamReader(stream));
-
-                StringBuffer buffer = new StringBuffer();
-                String line = "";
-
-                while ((line = reader.readLine()) != null) {
-                    buffer.append(line + "\n");
-                    Log.d("Response: ", "> " + line);   //here u ll get whole response...... :-)
-
-
-
+        protected String doInBackground(String... uri){
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpResponse response;
+            String responseString = null;
+            try{
+                response = httpclient.execute(new HttpGet(uri[0]));
+                StatusLine statusLine = response.getStatusLine();
+                if(statusLine.getStatusCode() == HttpStatus.SC_OK){
+                    ByteArrayOutputStream output = new ByteArrayOutputStream();
+                    response.getEntity().writeTo(output);
+                    output.close();
+                    responseString = output.toString();
+                }else {
+                    response.getEntity().getContent().close();
+                    throw new IOException(statusLine.getReasonPhrase());
                 }
-                jsonArray = new JSONArray(line);
-                for(int i = 0; i < jsonArray.length(); i++ ){
-                    jsonObject = jsonArray.getJSONObject(i);
-                    Log.d("Output", jsonObject.getString("addresses"));
-                }
-
-
-                return buffer.toString();
-
-            }catch(Exception e){
-                Log.e("Error", e.getMessage());
-            } finally {
-                if (connection != null) {
-                    connection.disconnect();
-                }
-                try {
-                    if (reader != null) {
-                        reader.close();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            } catch (Exception e){
+                Log.d("Error", "Request failed");
             }
-            return null;
+            return responseString;
         }
 
         @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
+        protected void onPostExecute(String response) {
+            super.onPostExecute(response);
             if (pd.isShowing()){
                 pd.dismiss();
             }
+            try{
+                jsonObject = new JSONObject(response);
+                jsonArray = jsonObject.getJSONArray("addresses");
 
-           Spinner addressSpinner = (Spinner) findViewById(R.id.addressSpinner);
-            String[] cacat = {"cacat1", "cacat2"};
-            addressSpinner.setAdapter(new ArrayAdapter<String>(LocationActivity.this,
-                    android.R.layout.simple_spinner_dropdown_item,cacat));
-
-            addressSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+                for(int i = 0; i < jsonArray.length(); i++){
+                    JSONObject address = jsonArray.getJSONObject(i);
+                    addresses.add(address.getString("addresses"));
                 }
 
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
+                Spinner addressSpinner = (Spinner) findViewById(R.id.addressSpinner);
 
-                }
-            });
+                addressSpinner.setAdapter(new ArrayAdapter<String>(LocationActivity.this,
+                        android.R.layout.simple_spinner_dropdown_item,addresses));
+
+                addressSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+
+            }catch(JSONException e){
+                Log.d("Error", "onPostExecute: Could not parse the Json ");
+            }
+
 
 
 
