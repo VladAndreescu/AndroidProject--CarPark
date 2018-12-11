@@ -36,11 +36,19 @@ public class CarDetailsActivity extends AppCompatActivity {
                 String carMakeValue = carMake.getText().toString();
                 String carModelValue = carModel.getText().toString();
 
+                Bundle bundle = getIntent().getExtras();
+                String postcode = bundle.getString("postcode");
+                String street = bundle.getString("street");
+                String town = bundle.getString("town");
+
                 Intent i =  new Intent(CarDetailsActivity.this, OwnerDetails.class);
                 i.putExtra("permitNo", permitNoValue);
                 i.putExtra("registrationNo", regNoValue);
                 i.putExtra("carMake", carMakeValue);
                 i.putExtra("carModel", carModelValue);
+                i.putExtra("postcode", postcode);
+                i.putExtra("street", street);
+                i.putExtra("town", town);
                 startActivity(i);
             }
 

@@ -120,11 +120,11 @@ public class OwnerDetails extends AppCompatActivity {
         mDB.child(key).child("Postcode").setValue(postcode);
         mDB.child(key).child("Street").setValue(street);
         mDB.child(key).child("Town").setValue(town);
-        mDB.child(key).child("Permit No").setValue(permitNo);
-        mDB.child(key).child("Registration No").setValue(regNo);
-        mDB.child(key).child("Car Make").setValue(carMake);
-        mDB.child(key).child("Car Model").setValue(carModel);
-        mDB.child(key).child("Owner Name").setValue(ownerName.getText().toString());
+        mDB.child(key).child("PermitNo").setValue(permitNo);
+        mDB.child(key).child("RegistrationNo").setValue(regNo);
+        mDB.child(key).child("CarMake").setValue(carMake);
+        mDB.child(key).child("CarModel").setValue(carModel);
+        mDB.child(key).child("OwnerName").setValue(ownerName.getText().toString());
         mDB.child(key).child("Offence").setValue(offence.getText().toString());
         mDB.child(key).child("Description").setValue(description.getText().toString());
         mDB.child(key).child("Photo").setValue(photoEncoded);
