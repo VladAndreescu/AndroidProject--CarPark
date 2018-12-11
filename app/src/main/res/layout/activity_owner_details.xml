@@ -58,8 +58,8 @@
 
     <TextView
         android:id="@+id/offenceText"
-        android:layout_width="165"
-        android:layout_height="41"
+        android:layout_width="165dp"
+        android:layout_height="41dp"
         android:layout_marginTop="8dp"
         android:text="Offence"
         android:textSize="25sp"
@@ -69,7 +69,7 @@
 
     <TextView
         android:id="@+id/descText"
-        android:layout_width="165"
+        android:layout_width="165dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Description"
@@ -112,8 +112,8 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="100"
-        android:layout_height="100"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:visibility="visible"

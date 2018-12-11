@@ -1,13 +1,27 @@
 package com.example.vladu.carpark;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.io.ByteArrayOutputStream;
+
 public class OwnerDetails extends AppCompatActivity {
 
+    private DatabaseReference mDB;
+    private FirebaseAuth mAuth;
 
     private EditText ownerName;
     private EditText offence;
@@ -15,6 +29,19 @@ public class OwnerDetails extends AppCompatActivity {
     private Button takePicture;
     private Button uploadRecord;
     private ImageView photo;
+
+    private  String postcode;
+    private String street;
+    private String town;
+    private String permitNo;
+    private String regNo;
+    private String carMake;
+    private String carModel;
+
+    final FirebaseUser user = mAuth.getCurrentUser();
+    final String userID = user.getUid();
+
+    private static final int REQUEST_IMAGE_CAPTURE = 100;
 
 
     @Override
@@ -31,14 +58,48 @@ public class OwnerDetails extends AppCompatActivity {
 
         //Retrieve the information from the LocationActivity and CarDetails activity
         Bundle bundle = getIntent().getExtras();
-        final String postcode = bundle.getString("postcode");
-        final String street = bundle.getString("street");
-        final String town = bundle.getString("town");
-        final String permitNo = bundle.getString("permitNo");
-        final String regNo = bundle.getString("registrationNo");
-        final String carMake= bundle.getString("carMake");
-        final String carModel = bundle.getString("carModel");
+        postcode = bundle.getString("postcode");
+        street = bundle.getString("street");
+        town = bundle.getString("town");
+        permitNo = bundle.getString("permitNo");
+        regNo = bundle.getString("registrationNo");
+        carMake= bundle.getString("carMake");
+        carModel = bundle.getString("carModel");
 
+        mAuth = FirebaseAuth.getInstance();
+
+        takePicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onLaunchCamera();
+            }
+        });
+
+
+    }
+
+    public void onLaunchCamera(){
+        Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if(takePhotoIntent.resolveActivity(this.getPackageManager())!= null){
+            startActivityForResult(takePhotoIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
+    @Override
+    public  void onActivityResult(int requestCode, int resultCode, Intent data){
+        if(requestCode == REQUEST_IMAGE_CAPTURE && resultCode == this.RESULT_OK){
+            Bundle extras = data.getExtras();
+            Bitmap photoBitmap = (Bitmap) extras.get("data");
+            photo.setImageBitmap(photoBitmap);
+        }
+    }
+
+    public void encodeBitmapSaveToFirebase(Bitmap bitmap){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        String photoEncoded = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT);
+        mDB = FirebaseDatabase.getInstance().getReference();
         
+
     }
 }
