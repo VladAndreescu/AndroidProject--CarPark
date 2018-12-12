@@ -34,13 +34,16 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+
         mAuth = FirebaseAuth.getInstance();
+
+        //declaring views
         emailReg = (EditText) findViewById(R.id.emailRegEdt);
         passwordReg = (EditText) findViewById(R.id.passwordRegEdt);
         register = (Button) findViewById(R.id.registerBtn);
 
 
-
+        // register Button that calls the Register function and redirect user to Login Activity
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,16 +55,19 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
+    // Register function that stores the user's details into the cloud using Firebase API
     private void Register(){
+
+        //declaring user variables
         String email = emailReg.getText().toString();
         String password = passwordReg.getText().toString();
 
         // Empty boxes validation
-
         if(email.equals("") || password.equals(""))
             Toast.makeText(getApplicationContext(),"Please complete all fields",Toast.LENGTH_LONG).show();
 
         else {
+            //Firebase specific function that register an user into database using email and password
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -74,6 +80,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
                             } else {
+                                //display a message if the register action failed
                                 Toast.makeText(RegisterActivity.this, "Sign Up has failed",
                                         Toast.LENGTH_SHORT).show();
                             }

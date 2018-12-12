@@ -31,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     //implement firebase authentication
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,13 +39,13 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-
+        //declaring views
         emailLogin = (EditText) findViewById(R.id.emailEdt);
         passwordLogin = (EditText) findViewById(R.id.passwordEdt);
         registerLink = (Button) findViewById(R.id.registerLinkBtn);
         login = (Button) findViewById(R.id.loginBtn);
 
-        // Set up navigation link for register button
+        // register Button that redirects the user to Register Activity if he does not have an account
         registerLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,8 +54,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        //
-
+        // login button that checks if the user exists in the database
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,18 +66,25 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-        };
-
+        }
+        //
         private void Login(){
+
+            //declaring user's variables
             String email = emailLogin.getText().toString();
             String password = passwordLogin.getText().toString();
 
+            // check for empty boxes
             if (email.equals("") || password.equals(""))
 
                 Toast.makeText(getApplicationContext(), "Please complete all fields", Toast.LENGTH_LONG).show();
 
 
             else {
+
+                //Specific Firebase function that checks if the email and password that user
+                //provided is the same with the email and password from Firebase database
+
                 mAuth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                             @Override
@@ -87,10 +94,13 @@ public class LoginActivity extends AppCompatActivity {
 
                                 if (task.isSuccessful()) {
                                     final FirebaseUser currentUser = mAuth.getCurrentUser();
-                                    // Go to User Area Activity
+
+                                    // after the login was successful. Redirect users to Home Activity
                                     startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                                     finish();
                                 } else {
+
+                                    //display a message if the login failed
                                     Toast.makeText(LoginActivity.this, "Login was not successful",
                                             Toast.LENGTH_SHORT).show();
                                 }
