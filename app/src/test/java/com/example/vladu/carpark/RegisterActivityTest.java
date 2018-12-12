@@ -21,7 +21,7 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
-public class LoginActivityTest {
+public class RegisterActivityTest {
 
     @Mock
     private FirebaseAuth mockAuth;
@@ -54,7 +54,6 @@ public class LoginActivityTest {
         setupTask(mockProviderQueryResultTask);
         setupTask(mockVoidTask);
 
-        when(mockAuth.signInWithEmailAndPassword("email", "password")).thenReturn(mockAuthTask);
         when(mockAuth.createUserWithEmailAndPassword("email", "password")).thenReturn(mockAuthTask);
 
         when(mockAuth.getCurrentUser()).thenReturn(mockUser);
@@ -68,27 +67,15 @@ public class LoginActivityTest {
     }
 
     @Test
-    public void signInWithEmailAndPassword()  {
+    public void createUserWithEmailAndPassword()  {
         final String email = "test@gmail.com";
         final String password = "test123";
 
-        mockAuth.signInWithEmailAndPassword(email, password);
-        verify(mockAuth).signInWithEmailAndPassword(eq("test@gmail.com"), eq("test123"));
+        mockAuth.createUserWithEmailAndPassword(email,password);
 
+        verify(mockAuth).createUserWithEmailAndPassword(eq("test@gmail.com"), eq("test123"));
 
 
     }
-
-    @Test
-    public void signInWithEmailAndPassword_AuthError()  {
-        final String email = "test@gmail.com";
-        final String password = "test123";
-
-        mockAuth.signInWithEmailAndPassword(email, password);
-
-        Exception e = new Exception("Login was not successful");
-
-        verify(mockAuth).signInWithEmailAndPassword(eq("test@gmail.com"), eq("test123"));
-
-    }
+    
 }
