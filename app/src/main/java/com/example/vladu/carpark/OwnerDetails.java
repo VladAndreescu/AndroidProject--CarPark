@@ -20,12 +20,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.io.ByteArrayOutputStream;
 
 public class OwnerDetails extends AppCompatActivity {
-
+    //declaring Firebase variables
     private DatabaseReference mDB;
     private FirebaseAuth mAuth;
     private String userID;
     private FirebaseUser user;
 
+    //declaring variables
     private EditText ownerName;
     private EditText offence;
     private EditText description;
@@ -43,7 +44,7 @@ public class OwnerDetails extends AppCompatActivity {
     private Bitmap bitmap;
 
 
-
+    //I declared a variables for the Image and I assigned it a value greater than 0
     private static final int REQUEST_IMAGE_CAPTURE = 100;
 
 
@@ -51,10 +52,13 @@ public class OwnerDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owner_details);
+
+        //declaring Firebase variables
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
         userID = user.getUid();
 
+        //declaring views
         ownerName = (EditText) findViewById(R.id.ownerNameEdt);
         offence = (EditText) findViewById(R.id.offenceEdt);
         description = (EditText) findViewById(R.id.descriptionEdt);
@@ -74,6 +78,8 @@ public class OwnerDetails extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
+
+        //takePicture button should allow user to open the camera, take a picture and store it in a ImageView as a Bitmap
         takePicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,6 +87,7 @@ public class OwnerDetails extends AppCompatActivity {
             }
         });
 
+        //uploadRecord button should convert the image from Bitmap into PNG and then upload the record in the cloud Database
         uploadRecord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,7 +101,7 @@ public class OwnerDetails extends AppCompatActivity {
 
 
     }
-
+    //function that lauches camera app
     public void onLaunchCamera(){
         Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if(takePhotoIntent.resolveActivity(this.getPackageManager())!= null){
@@ -103,6 +110,7 @@ public class OwnerDetails extends AppCompatActivity {
     }
 
     @Override
+    //after the picture was taken, extract the image value and display it in ImageView
     public  void onActivityResult(int requestCode, int resultCode, Intent data){
         if(requestCode == REQUEST_IMAGE_CAPTURE && resultCode == this.RESULT_OK){
             Bundle extras = data.getExtras();
@@ -110,7 +118,8 @@ public class OwnerDetails extends AppCompatActivity {
             photo.setImageBitmap(photoBitmap);
         }
     }
-
+    //this function converts the Bitmap image into a PNG image in order to be able to save it in Firease Database
+    //this function also creates the Model for the database and insert the values into the specific row.
     public void encodeBitmapSaveToFirebase(Bitmap bitmap){
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);

@@ -9,6 +9,7 @@ import android.widget.EditText;
 
 public class CarDetailsActivity extends AppCompatActivity {
 
+    //declaring variables
     private EditText permitNo;
     private EditText regNo;
     private EditText carMake;
@@ -21,6 +22,7 @@ public class CarDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car_details);
 
+        //declaring views for the variables
         permitNo = (EditText) findViewById(R.id.permitNoEdit);
         regNo = (EditText) findViewById(R.id.carRegEdit);
         carMake = (EditText) findViewById(R.id.makeEdit);
@@ -28,19 +30,25 @@ public class CarDetailsActivity extends AppCompatActivity {
         nextBtn = (Button) findViewById(R.id.personDetailsButton);
         backBtn = (Button) findViewById(R.id.backButton);
 
+
+
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                //insert the user's input into variables so I can use them in other Activities
                 String permitNoValue = permitNo.getText().toString();
                 String regNoValue = regNo.getText().toString();
                 String carMakeValue = carMake.getText().toString();
                 String carModelValue = carModel.getText().toString();
 
+                //I created a bundle to store the variables came from the previous Activity
                 Bundle bundle = getIntent().getExtras();
                 String postcode = bundle.getString("postcode");
                 String street = bundle.getString("street");
                 String town = bundle.getString("town");
 
+                //Setting up a new intent to bring the variables to other Activities
                 Intent i =  new Intent(CarDetailsActivity.this, OwnerDetails.class);
                 i.putExtra("permitNo", permitNoValue);
                 i.putExtra("registrationNo", regNoValue);
@@ -54,6 +62,7 @@ public class CarDetailsActivity extends AppCompatActivity {
 
         });
 
+        //backButton should return user to previous Activity
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

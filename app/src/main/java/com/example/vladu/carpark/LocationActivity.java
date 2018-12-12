@@ -76,10 +76,13 @@ public class LocationActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
+
+        //Implemented Google Maps API
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        //declaring Firebase variables
         mDB = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
 
@@ -89,7 +92,7 @@ public class LocationActivity extends AppCompatActivity
         getAddresses = (Button) findViewById(R.id.findAddressBtn);
         nextbtn = (Button) findViewById(R.id.locationNextBtn);
 
-
+        // Button that calls the GET Request to the Server in order to return the data in JSON format
         getAddresses.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,7 +100,7 @@ public class LocationActivity extends AppCompatActivity
             }
         });
 
-
+        //Save the user's inputs and bring them along the activities using Intent
         nextbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,16 +118,14 @@ public class LocationActivity extends AppCompatActivity
 
 
     }
-
-    /*private void refreshAddresses(ArrayList<String> addresses){
-        addresses.setAdapter
-    }*/
-
+    // Class Created in order to retrieve the JSON data from the URL API
     private class getJsonData extends AsyncTask<String, String, String> {
+
 
         protected void onPreExecute() {
             super.onPreExecute();
 
+            //Setting up a ProgressDialog in order to display a loading image on the screen while data is handled
             pd = new ProgressDialog(LocationActivity.this);
             pd.setMessage("Please wait");
             pd.setCancelable(false);
@@ -132,23 +133,35 @@ public class LocationActivity extends AppCompatActivity
         }
 
         protected String doInBackground(String... uri){
+
+            //declaring variables
             HttpClient httpclient = new DefaultHttpClient();
             HttpResponse response;
+
+            //this string will hold the JSON data
             String responseString = null;
             try{
                 response = httpclient.execute(new HttpGet(uri[0]));
                 StatusLine statusLine = response.getStatusLine();
                 if(statusLine.getStatusCode() == HttpStatus.SC_OK){
-                    ByteArrayOutputStream output = new ByteArrayOutputStream();
-                    response.getEntity().writeTo(output);
-                    output.close();
-                    responseString = output.toString();
+
+                    //take the JSON data and add it in responseString
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    response.getEntity().writeTo(baos);
+                    baos.close();
+                    responseString = baos.toString();
+
+                    //display the JSON in the console
                     Log.d("Response", responseString);
                 }else {
+
+                    //throw an error if the status is not OK
                     response.getEntity().getContent().close();
                     throw new IOException(statusLine.getReasonPhrase());
                 }
             } catch (Exception e){
+
+                //throw an error if there is an error on the route
                 Log.d("Error", "Request failed");
             }
             return responseString;
@@ -157,24 +170,31 @@ public class LocationActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(String response) {
             super.onPostExecute(response);
+
+            //hide the ProgressDialog after the process finished
             if (pd.isShowing()){
                 pd.dismiss();
             }
             try{
+                //convert the JSON received from previous function into an Array of Strings
                 jsonObject = new JSONObject(response);
                 jsonArray = jsonObject.getJSONArray("addresses");
-                //jsonObject = jsonArray.getJSONObject(0);
+                //add each address found in the JSON into the addresses ArrayList
                 ArrayList<String> addresses = new ArrayList<>();
                 for(int i = 0; i < jsonArray.length(); i++){
                     String spinnerElement = jsonArray.getString(i);
                     addresses.add(spinnerElement);
                 }
 
+                //declaring the spinner view
                 addressSpinner = (Spinner) findViewById(R.id.addressSpinner);
 
+                //Insert the addresses ArrayList into the spinner
                 addressSpinner.setAdapter(new ArrayAdapter<String>(LocationActivity.this,
                         android.R.layout.simple_spinner_dropdown_item,addresses));
 
+                // This application only requires the information from the SelectedItem.
+                //which is taken by using addressSpinner.getSelectedItem().toString();
                 addressSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -210,9 +230,7 @@ public class LocationActivity extends AppCompatActivity
         enableMyLocation();
     }
 
-    /**
-     * Enables the My Location layer if the fine location permission has been granted.
-     */
+    //enables my location if permission was granted
     private void enableMyLocation() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -226,6 +244,7 @@ public class LocationActivity extends AppCompatActivity
     }
 
     @Override
+    //test to see if the myLocation button was clicked
     public boolean onMyLocationButtonClick() {
         Toast.makeText(this, "MyLocation button clicked", Toast.LENGTH_SHORT).show();
         // Return false so that we don't consume the event and the default behavior still occurs
@@ -265,9 +284,7 @@ public class LocationActivity extends AppCompatActivity
         }
     }
 
-    /**
-     * Displays a dialog with error message explaining that the location permission is missing.
-     */
+    //display an error message if the permission was declined
     private void showMissingPermissionError() {
         PermissionUtils.PermissionDeniedDialog
                 .newInstance(true).show(getSupportFragmentManager(), "dialog");

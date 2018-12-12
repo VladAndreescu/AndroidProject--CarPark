@@ -13,6 +13,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        //declaring variables and the views
         final Button newRecordBtn = (Button) findViewById(R.id.newRecordBtn);
         final Button viewRecordsbtn = (Button) findViewById(R.id.viewRecBtn);
         final Button changeUserbtn = (Button) findViewById(R.id.changeUserBtn);
@@ -20,7 +21,7 @@ public class HomeActivity extends AppCompatActivity {
 
         //Set up navigation links for the buttons
 
-        //New Record Button
+        //New Record Button -> redirects the user to the first Record form (Location Activity)
         newRecordBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -28,5 +29,6 @@ public class HomeActivity extends AppCompatActivity {
                 HomeActivity.this.startActivity(locationIntent);
             }
         });
+
     }
 }
